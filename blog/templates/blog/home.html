@@ -4,9 +4,18 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
+
+    {% if title %}
+        <title>Django Blog - {{ title }}</title>
+        {% else %}
+        <title>Django Blog</title>
+    {% endif %}
 </head>
 <body>
-    <h1>Blog home!</h1>
+    {% for post in posts %}
+        <h1>{{ post.title }}</h1>
+        <p>{{ post.author }} on {{ post.date_posted }}</p>
+        <p>{{ post.content }}</p>
+    {% endfor %}
 </body>
 </html>
