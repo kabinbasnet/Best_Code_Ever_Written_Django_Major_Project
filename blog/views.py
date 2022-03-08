@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from .models import Post
 
 # ::::::::Creating dummy data in list form:::::::::::::::::::::::::::
 # Dummy data ==>> being information that doesnot contain any useful data, but serves to reserve space.
@@ -21,7 +22,7 @@ posts = [
 
 def home(request):
     context = {
-        'posts': posts
+        'posts': Post.objects.all()
     }
     return render(request, 'blog/home.html', context)
 
