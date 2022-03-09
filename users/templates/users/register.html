@@ -1,13 +1,16 @@
 {# ::::::::::Inheritance Concept::::::::: #}
 {% extends "blog/base.html" %}
 
+{% comment %} :::::::Allow us to use crispy forms in this required form::::::: {% endcomment %}
+{% load crispy_forms_tags %}
+
 {% block content %}
     <div class="content-section">
         <form method="POST">
             {% csrf_token %}
             <fieldset class="form-group">
                 <legend class="border-bottom mb-4">Join Today</legend>
-                {{ form.as_p }}
+                {{ form | crispy }}
             </fieldset>
             <!-- ::::::::Submit button code::::::::::::: -->
             <div class="form-group">
