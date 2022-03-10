@@ -1,0 +1,9 @@
+{# ::::::::::Inheritance Concept::::::::: #}
+{% extends "blog/base.html" %}
+
+{% comment %} :::::::Allow us to use crispy forms in this required form::::::: {% endcomment %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <h1>{{ user.username }}</h1>
+{% endblock content %}
