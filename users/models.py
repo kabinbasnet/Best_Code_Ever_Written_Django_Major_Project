@@ -5,7 +5,7 @@ from statistics import mode
 from django.db import models
 from django.contrib.auth.models import User
 from PIL import Image
-# PIL(Programming Imaging Library) from pip install==> external library for Python programming language that adds support for image
+# PIL(Python Imaging Library) from pip install==> external library for Python programming language that adds support for image
 # processing capabilities.
 
 # Create your models here.
@@ -18,7 +18,7 @@ class Profile(models.Model):
     def __str__(self):
         return f'{self.user.username} Profile'
 
-    # :::::::Define inorder to reduce to the large size of image:::::::::::
+    # :::::::::Define inorder to reduce large size to smaller size of images:::::::::::
     def save(self):
         super().save()
 
