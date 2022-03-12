@@ -4,7 +4,9 @@ from operator import mod
 from statistics import mode
 from django.db import models
 from django.contrib.auth.models import User
-from PIL import Image  # PIL from pip install
+from PIL import Image
+# PIL(Programming Imaging Library) from pip install==> external library for Python programming language that adds support for image
+# processing capabilities.
 
 # Create your models here.
 
