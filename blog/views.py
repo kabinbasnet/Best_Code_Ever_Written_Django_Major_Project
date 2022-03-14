@@ -1,5 +1,11 @@
+from dataclasses import fields
 from django.http import HttpResponse
-from django.views.generic import ListView  # Note: LisView is class based view
+# Note: LisView and DetailView are class based view
+from django.views.generic import (
+    ListView,
+    DetailView,
+    CreateView
+)
 from .models import Post
 from django.shortcuts import render
 
@@ -37,6 +43,15 @@ class PostListView(ListView):
     context_object_name = 'posts'
     # -date_posted ==> gives recent to oldest date time views
     ordering = ['-date_posted']
+
+
+class PostDetailView(DetailView):
+    model = Post
+
+
+class PostCreateView(CreateView):
+    model = Post
+    fields = ['title', 'content']
 
 
 def about(request):
