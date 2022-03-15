@@ -4,12 +4,13 @@ from django.http import HttpResponse
 from django.views.generic import (
     ListView,
     DetailView,
-    CreateView
+    CreateView,
+    UpdateView
 )
 from .models import Post
 from django.shortcuts import render
 #  :::::::LoginRequiredMixin Same as login_required decorator::::::::
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 # ::::::::Creating dummy data in list form:::::::::::::::::::::::::::
 # Dummy data ==>> being information that doesnot contain any useful data, but serves to reserve space.
@@ -59,6 +60,23 @@ class PostCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super().form_valid(form)
+
+
+class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Post
+    fields = ['title', 'content']
+
+    # ::::::::::When form is post then we need to valid it and save in our database:::::::::::::::
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+    # ::::::Each user can only update their post but not the other users:::::::::::
+    def test_func(self):
+        post = self.get_object()
+        if self.request.user == post.author:
+            return True
+        return False
 
 
 def about(request):
