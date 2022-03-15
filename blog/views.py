@@ -5,7 +5,8 @@ from django.views.generic import (
     ListView,
     DetailView,
     CreateView,
-    UpdateView
+    UpdateView,
+    DeleteView
 )
 from .models import Post
 from django.shortcuts import render
@@ -72,6 +73,19 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         return super().form_valid(form)
 
     # ::::::Each user can only update their post but not the other users:::::::::::
+    def test_func(self):
+        post = self.get_object()
+        if self.request.user == post.author:
+            return True
+        return False
+
+
+class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Post
+    # ::::::::::::::After deleting the post it'll takes us to home page:::::::::::::::
+    success_url = '/'
+
+    # ::::::Each user can only delete their post but not the other users post:::::::::::
     def test_func(self):
         post = self.get_object()
         if self.request.user == post.author:
