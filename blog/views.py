@@ -53,6 +53,11 @@ class PostCreateView(CreateView):
     model = Post
     fields = ['title', 'content']
 
+    # ::::::::::When form is post then we need to valid it and save in our database:::::::::::::::
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
 
 def about(request):
     return render(request, 'blog/about.html', {'title': 'About'})
