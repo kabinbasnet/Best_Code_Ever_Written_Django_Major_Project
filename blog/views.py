@@ -8,6 +8,8 @@ from django.views.generic import (
 )
 from .models import Post
 from django.shortcuts import render
+#  :::::::LoginRequiredMixin Same as login_required decorator::::::::
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 # ::::::::Creating dummy data in list form:::::::::::::::::::::::::::
 # Dummy data ==>> being information that doesnot contain any useful data, but serves to reserve space.
@@ -49,7 +51,7 @@ class PostDetailView(DetailView):
     model = Post
 
 
-class PostCreateView(CreateView):
+class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
     fields = ['title', 'content']
 
