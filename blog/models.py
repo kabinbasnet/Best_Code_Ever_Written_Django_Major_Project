@@ -2,7 +2,7 @@ from django.db import models
 from django.forms import modelformset_factory
 from django.utils import timezone
 from django.contrib.auth.models import User
-
+from django.urls import reverse
 # Create your models here.
 
 
@@ -15,3 +15,6 @@ class Post(models.Model):
     def __str__(self):
         # Creating dunder method where dunder ==>> double underscore.
         return self.title
+
+    def get_absolute_url(self):
+        return reverse('post-detail', kwargs={'pk': self.pk})
