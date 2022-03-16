@@ -45,8 +45,12 @@ class PostListView(ListView):
     template_name = 'blog/home.html'
 
     context_object_name = 'posts'
+
     # -date_posted ==> gives recent to oldest date time views
     ordering = ['-date_posted']
+
+    # ::::::::::paginate_by means give pagination(a process used to divide a large data into smaller discrete pages) after 2 posts::::::::::::::
+    paginate_by = 2
 
 
 class PostDetailView(DetailView):
