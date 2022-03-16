@@ -9,9 +9,10 @@ from django.views.generic import (
     DeleteView
 )
 from .models import Post
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 #  :::::::LoginRequiredMixin Same as login_required decorator::::::::
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.models import User
 
 # ::::::::Creating dummy data in list form:::::::::::::::::::::::::::
 # Dummy data ==>> being information that doesnot contain any useful data, but serves to reserve space.
@@ -51,6 +52,27 @@ class PostListView(ListView):
 
     # ::::::::::paginate_by means give pagination(a process used to divide a large data into smaller discrete pages) after 2 posts::::::::::::::
     paginate_by = 5
+
+
+class UserPostListView(ListView):
+    # :::::::::For User who can see their post only:::::::::::::::::
+    model = Post
+
+    # <app ==>> blog >/<model ==>> Post >_<viewtype =>> blog/home.html >.html
+    template_name = 'blog/user_posts.html'
+
+    context_object_name = 'posts'
+
+    ordering = ['-date_posted']
+
+    # ::::::::::paginate_by means give pagination(a process used to divide a large data into smaller discrete pages) after 2 posts::::::::::::::
+    paginate_by = 5
+
+    # ::::::Pass this query in url:::::::::::
+    def get_queryset(self):
+        user = get_object_or_404(User, username=self.kwargs.get('username'))
+        # Note: '-date_posted' ==> gives recent to oldest date time views
+        return Post.objects.filter(author=user).order_by('-date_posted')
 
 
 class PostDetailView(DetailView):
